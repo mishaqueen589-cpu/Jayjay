@@ -3,251 +3,131 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ultimate Truth or Dare - April Fools!</title>
-<link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
+<title>Best Friend April Fools</title>
 <style>
-  body {
-    font-family: 'Comic Neue', cursive;
-    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-    min-height: 100vh;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    overflow-x: hidden;
-  }
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='32' font-size='32'>🐻</text></svg>">
-  h1 {
-    color: #fff;
-    text-shadow: 2px 2px 8px #000;
-    margin-top: 20px;
-    text-align: center;
-  }
-  .container {
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 20px;
-    padding: 30px;
-    margin: 20px;
-    max-width: 500px;
-    width: 90%;
-    text-align: center;
-    box-shadow: 0px 8px 20px rgba(0,0,0,0.3);
-    position: relative;
-  }
-  input[type="text"] {
-    padding: 10px;
-    border-radius: 10px;
-    border: none;
-    margin-bottom: 15px;
-    width: 80%;
-    font-size: 16px;
-  }
-  button {
-    padding: 12px 25px;
-    margin: 10px;
-    font-size: 18px;
-    border-radius: 15px;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  }
-  button:hover {
-    transform: scale(1.1);
-  }
-  .truth {
-    background: #ff6b6b;
-    color: #fff;
-  }
-  .dare {
-    background: #4ecdc4;
-    color: #fff;
-  }
-  #taskDisplay {
-    margin-top: 20px;
-    font-size: 20px;
-    min-height: 60px;
-    color: #333;
-  }
-  #scoreboard {
-    margin-top: 25px;
-    background: #fff7;
-    padding: 15px;
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    width: 100%;
-  }
-  .player-score {
-    margin: 5px 0;
-    font-weight: bold;
-  }
-  #prankInput {
-    margin-top: 15px;
-    padding: 10px;
-    width: 80%;
-    border-radius: 10px;
-    border: 1px solid #aaa;
-    font-size: 16px;
-  }
-  #addPrank {
-    background: #ff9f43;
-    color: #fff;
-  }
-  .sticker {
-    position: absolute;
-    font-size: 40px;
-    animation: float 5s infinite;
-  }
-  @keyframes float {
-    0% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-30px) rotate(15deg); }
-    100% { transform: translateY(0) rotate(0deg); }
-  }
+    body {
+        font-family: 'Comic Sans MS', cursive, sans-serif;
+        background: linear-gradient(to right, #ffd6e0, #fff7d6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+    }
+    .container {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 30px 50px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        text-align: center;
+        max-width: 500px;
+        position: relative;
+    }
+    h1 {
+        color: #ff4da6;
+    }
+    .question {
+        font-size: 1.2rem;
+        margin: 20px 0;
+    }
+    .buttons {
+        margin-top: 20px;
+    }
+    button {
+        padding: 10px 25px;
+        margin: 10px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    button:hover {
+        transform: scale(1.1);
+    }
+    .yes { background-color: #ff6b6b; color: white; }
+    .no { background-color: #4da6ff; color: white; }
+    .message {
+        margin-top: 20px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: #ff4da6;
+    }
+    .character {
+        position: absolute;
+        bottom: -50px;
+        width: 80px;
+        transition: all 0.5s ease;
+    }
+    #bunny { left: -100px; }
+    #bear { right: -100px; }
 </style>
 </head>
 <body>
-
-<h1>Ultimate Truth or Dare - APRIL FOOLS! 🐻🎉</h1>
-
 <div class="container">
-  <input type="text" id="playerName" placeholder="Enter your name or nickname"/>
-  <div>
-    <button class="truth" onclick="chooseTask('truth')">Truth</button>
-    <button class="dare" onclick="chooseTask('dare')">Dare</button>
-  </div>
-  <div id="taskDisplay"></div>
-
-  <input type="text" id="prankInput" placeholder="Add your own prank here"/>
-  <button id="addPrank" onclick="addPrank()">Add Prank</button>
-
-  <div id="scoreboard">
-    <h3>Scoreboard</h3>
-    <div id="scores"></div>
-  </div>
+    <h1>🤍 April Fools Prank 🤍</h1>
+    <div class="question" id="question">Am I your best friend?</div>
+    <div class="buttons">
+        <button class="yes" onclick="answer('yes')">Yes</button>
+        <button class="no" onclick="answer('no')">No</button>
+    </div>
+    <div class="message" id="message"></div>
+    <img src="https://i.ibb.co/6JmM6PN/bunny.png" alt="Bunny" class="character" id="bunny">
+    <img src="https://i.ibb.co/7v0Rk6C/bear.png" alt="Bear" class="character" id="bear">
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script>
-const players = [];
-const playerScores = {};
-let pranks = [
-  "You lost me as your best friend 😢… just kidding! APRIL FOOLS!",
-  "Message your crush a funny confession! 😂",
-  "Your cousin is jealous of you! Reveal a silly secret!",
-  "Impossible dare: click the moving button 10 times in 5 seconds!",
-  "Draw a bear sticker on paper and show it to the camera 🐻",
-  "Sing a silly song loudly for 10 seconds 🎵",
-  "Pretend you are a cat for 30 seconds 😹",
-  "Send a fake emoji story to a friend 😜",
-  "Reveal the silliest thing you secretly love 💖",
-];
+let step = 0;
 
-function addPrank() {
-  const input = document.getElementById('prankInput').value.trim();
-  if(input) {
-    pranks.push(input);
-    document.getElementById('prankInput').value = '';
-    alert("Prank added! 🎉");
-  }
-}
+function answer(choice) {
+    const question = document.getElementById('question');
+    const message = document.getElementById('message');
+    const bunny = document.getElementById('bunny');
+    const bear = document.getElementById('bear');
 
-function chooseTask(type) {
-  const name = document.getElementById('playerName').value.trim() || "Player";
-  if(!players.includes(name)) {
-    players.push(name);
-    playerScores[name] = 0;
-    updateScores();
-  }
-
-  const randomIndex = Math.floor(Math.random() * pranks.length);
-  const task = pranks[randomIndex];
-  const display = document.getElementById('taskDisplay');
-
-  // Fun moving button prank for dare
-  if(type === 'dare' && Math.random() > 0.5) {
-    display.innerHTML = "";
-    const btn = document.createElement('button');
-    btn.textContent = task;
-    btn.style.position = 'relative';
-    btn.onclick = () => completeTask(name, btn);
-    display.appendChild(btn);
-    moveButtonRandomly(btn);
-  } else {
-    display.textContent = task;
-    completeTask(name);
-  }
-
-  // Confetti for fun
-  confetti({
-    particleCount: 50,
-    spread: 70,
-    origin: { y: 0.6 }
-  });
-
-  addSticker();
-}
-
-function completeTask(name, btn=null) {
-  if(btn) {
-    btn.onclick = null;
-    btn.style.transform = "scale(1.2)";
-  }
-  playerScores[name] += 10; // +10 points per task
-  updateScores();
-}
-
-function updateScores() {
-  const scoreDiv = document.getElementById('scores');
-  scoreDiv.innerHTML = '';
-  let maxScore = 0;
-  let winner = '';
-  for(const player of players) {
-    const div = document.createElement('div');
-    div.classList.add('player-score');
-    div.textContent = `${player}: ${playerScores[player]} pts`;
-    scoreDiv.appendChild(div);
-    if(playerScores[player] > maxScore) {
-      maxScore = playerScores[player];
-      winner = player;
+    if (step === 0) {
+        if (choice === 'yes') {
+            message.textContent = "I knew it! You are a liar!";
+        } else {
+            message.textContent = "I know you hate me!";
+        }
+        question.textContent = "Who is your best friend?";
+        step++;
+    } else if (step === 1) {
+        if (choice === 'me') {
+            message.textContent = "You are a liar!";
+        } else {
+            message.textContent = "You have changed!";
+        }
+        question.textContent = "Do you want to get rid of me?";
+        step++;
+    } else if (step === 2) {
+        if (choice === 'yes') {
+            message.textContent = "Congratulations! You have lost me!";
+        } else {
+            message.textContent = "How rude are you!";
+        }
+        question.textContent = "🎉 APRIL FOOL! 🎉";
+        document.querySelector('.buttons').style.display = 'none';
+        bunny.style.left = "50px";
+        bear.style.right = "50px";
     }
-  }
-  if(maxScore >= 50) { // Show winner after some points
-    const winDiv = document.createElement('div');
-    winDiv.style.marginTop = "10px";
-    winDiv.style.fontWeight = "bold";
-    winDiv.style.color = "#ff6b6b";
-    winDiv.textContent = `🏆 Winner: ${winner}! 🎉`;
-    scoreDiv.appendChild(winDiv);
-  }
 }
 
-function moveButtonRandomly(btn) {
-  const container = btn.parentElement;
-  const move = () => {
-    const maxX = container.clientWidth - btn.offsetWidth;
-    const maxY = 100; // limited vertical movement
-    const x = Math.random() * maxX;
-    const y = Math.random() * maxY;
-    btn.style.transform = `translate(${x}px, ${y}px)`;
-    if(btn.onclick) {
-      setTimeout(move, 1000);
-    }
-  };
-  move();
-}
-
-function addSticker() {
-  const sticker = document.createElement('div');
-  const bearEmojis = ["🐻","🧸","💖","🎉","😹"];
-  sticker.classList.add('sticker');
-  sticker.textContent = bearEmojis[Math.floor(Math.random() * bearEmojis.length)];
-  sticker.style.left = Math.random() * window.innerWidth + "px";
-  sticker.style.top = Math.random() * 200 + "px";
-  document.body.appendChild(sticker);
-  setTimeout(() => sticker.remove(), 5000);
-}
+// Dynamically change buttons for the second question
+document.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+        if (step === 1) {
+            document.querySelector('.yes').textContent = "Me";
+            document.querySelector('.no').textContent = "Other";
+        }
+        if (step === 2) {
+            document.querySelector('.yes').textContent = "Yes";
+            document.querySelector('.no').textContent = "No";
+        }
+    });
+});
 </script>
-
 </body>
 </html>
