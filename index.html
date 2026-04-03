@@ -3,128 +3,250 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Friendship Test! 🧐</title>
+<title>Ultimate Truth or Dare - April Fools!</title>
+<link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
 <style>
-  body { text-align: center; font-family: Arial, sans-serif; margin-top: 50px; background: #fefefe; transition: background 0.5s; }
-  h1 { color: #ff4d4d; }
-  .question { font-size: 22px; margin-top: 20px; }
-  button {
-    padding: 12px 25px; font-size: 18px; cursor: pointer; margin: 10px;
-    border: none; border-radius: 8px; background: #ff6666; color: white;
-    transition: transform 0.2s, background 0.3s;
+  body {
+    font-family: 'Comic Neue', cursive;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow-x: hidden;
   }
-  button:hover { transform: scale(1.1); background: #ff1a1a; }
-  #result { margin-top: 30px; font-size: 26px; font-weight: bold; color: #333; min-height: 60px; }
-  #share { margin-top: 20px; font-size: 18px; color: #333; }
-  #share input { width: 250px; padding: 5px; margin-right: 5px; font-size: 16px; }
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='32' font-size='32'>🐻</text></svg>">
+  h1 {
+    color: #fff;
+    text-shadow: 2px 2px 8px #000;
+    margin-top: 20px;
+    text-align: center;
+  }
+  .container {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    padding: 30px;
+    margin: 20px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0px 8px 20px rgba(0,0,0,0.3);
+    position: relative;
+  }
+  input[type="text"] {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    margin-bottom: 15px;
+    width: 80%;
+    font-size: 16px;
+  }
+  button {
+    padding: 12px 25px;
+    margin: 10px;
+    font-size: 18px;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  button:hover {
+    transform: scale(1.1);
+  }
+  .truth {
+    background: #ff6b6b;
+    color: #fff;
+  }
+  .dare {
+    background: #4ecdc4;
+    color: #fff;
+  }
+  #taskDisplay {
+    margin-top: 20px;
+    font-size: 20px;
+    min-height: 60px;
+    color: #333;
+  }
+  #scoreboard {
+    margin-top: 25px;
+    background: #fff7;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    width: 100%;
+  }
+  .player-score {
+    margin: 5px 0;
+    font-weight: bold;
+  }
+  #prankInput {
+    margin-top: 15px;
+    padding: 10px;
+    width: 80%;
+    border-radius: 10px;
+    border: 1px solid #aaa;
+    font-size: 16px;
+  }
+  #addPrank {
+    background: #ff9f43;
+    color: #fff;
+  }
+  .sticker {
+    position: absolute;
+    font-size: 40px;
+    animation: float 5s infinite;
+  }
+  @keyframes float {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-30px) rotate(15deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+  }
 </style>
 </head>
 <body>
 
-<h1>Friendship Test! 🤔</h1>
-<p>Answer a few questions to see if you are really my friend!</p>
+<h1>Ultimate Truth or Dare - APRIL FOOLS! 🐻🎉</h1>
 
-<div id="quiz">
-  <div class="question" id="question">Question will appear here</div>
-  <div id="options"></div>
+<div class="container">
+  <input type="text" id="playerName" placeholder="Enter your name or nickname"/>
+  <div>
+    <button class="truth" onclick="chooseTask('truth')">Truth</button>
+    <button class="dare" onclick="chooseTask('dare')">Dare</button>
+  </div>
+  <div id="taskDisplay"></div>
+
+  <input type="text" id="prankInput" placeholder="Add your own prank here"/>
+  <button id="addPrank" onclick="addPrank()">Add Prank</button>
+
+  <div id="scoreboard">
+    <h3>Scoreboard</h3>
+    <div id="scores"></div>
+  </div>
 </div>
 
-<div id="result"></div>
-
-<div id="share" style="display:none;">
-  <p>Send this link to your friend for a prank:</p>
-  <input type="text" id="shareLink" readonly>
-  <button onclick="copyLink()">Copy Link</button>
-</div>
-
-<!-- Confetti library -->
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script>
-// Get name from URL parameter or pick random funny name
-const urlParams = new URLSearchParams(window.location.search);
-let name = urlParams.get('name');
+const players = [];
+const playerScores = {};
+let pranks = [
+  "You lost me as your best friend 😢… just kidding! APRIL FOOLS!",
+  "Message your crush a funny confession! 😂",
+  "Your cousin is jealous of you! Reveal a silly secret!",
+  "Impossible dare: click the moving button 10 times in 5 seconds!",
+  "Draw a bear sticker on paper and show it to the camera 🐻",
+  "Sing a silly song loudly for 10 seconds 🎵",
+  "Pretend you are a cat for 30 seconds 😹",
+  "Send a fake emoji story to a friend 😜",
+  "Reveal the silliest thing you secretly love 💖",
+];
 
-const randomNames = ["Crazy Panda","Sneaky Ninja","Sleepy Cat","Alien Potato","Mysterious Blob","Cookie Monster","Angry Unicorn","Tiny Dragon"];
-if(!name) {
-  name = randomNames[Math.floor(Math.random() * randomNames.length)];
+function addPrank() {
+  const input = document.getElementById('prankInput').value.trim();
+  if(input) {
+    pranks.push(input);
+    document.getElementById('prankInput').value = '';
+    alert("Prank added! 🎉");
+  }
 }
 
-// Quiz questions
-const quiz = [
-  { q: "Do you remember my birthday?", options: ["Yes", "No"] },
-  { q: "Would you share your last cookie with me?", options: ["Yes", "No"] },
-  { q: "Do you like surprises?", options: ["Yes", "No"] }
-];
-
-// Prank messages (70% chance)
-const prankMessages = [
-  `${name}, you are not my friend! 😭`,
-  `Oh no! ${name}, I hate you 😈`,
-  `Error 404: Friendship not found 🤔`,
-  `${name}, maybe we can try to be friends later 😜`
-];
-
-// Nice messages (30% chance)
-const niceMessages = [
-  `${name}, you are my best friend! 🎉`,
-  `${name}, you are secretly an alien 👽`,
-  `${name}, you stole my cookies! 🍪`
-];
-
-let currentQuestion = 0;
-
-// Show quiz questions
-function showQuestion() {
-  if(currentQuestion >= quiz.length) { showResult(); return; }
-  const q = quiz[currentQuestion];
-  document.getElementById("question").innerText = q.q;
-  const optionsDiv = document.getElementById("options");
-  optionsDiv.innerHTML = "";
-  q.options.forEach(opt => {
-    const btn = document.createElement("button");
-    btn.innerText = opt;
-    btn.onclick = () => { currentQuestion++; showQuestion(); };
-    optionsDiv.appendChild(btn);
-  });
-}
-
-// Show prank/nice result
-function showResult() {
-  const isPrank = Math.random() < 0.7;
-  const message = isPrank ?
-                  prankMessages[Math.floor(Math.random() * prankMessages.length)] :
-                  niceMessages[Math.floor(Math.random() * niceMessages.length)];
-
-  document.getElementById("quiz").style.display = "none";
-  document.getElementById("result").innerText = message;
-
-  if(!isPrank) {
-    confetti({ particleCount:150, spread:80, origin:{y:0.6} });
-    document.body.style.background = "#e6ffe6"; // green
-  } else {
-    document.body.style.background = "#ffe6e6"; // red
+function chooseTask(type) {
+  const name = document.getElementById('playerName').value.trim() || "Player";
+  if(!players.includes(name)) {
+    players.push(name);
+    playerScores[name] = 0;
+    updateScores();
   }
 
-  // Show share link section
-  document.getElementById("share").style.display = "block";
-  const shareInput = document.getElementById("shareLink");
+  const randomIndex = Math.floor(Math.random() * pranks.length);
+  const task = pranks[randomIndex];
+  const display = document.getElementById('taskDisplay');
 
-  // Pick a new random name for next friend
-  const nextName = randomNames[Math.floor(Math.random() * randomNames.length)];
-  shareInput.value = `${window.location.origin}${window.location.pathname}?name=${encodeURIComponent(nextName)}`;
+  // Fun moving button prank for dare
+  if(type === 'dare' && Math.random() > 0.5) {
+    display.innerHTML = "";
+    const btn = document.createElement('button');
+    btn.textContent = task;
+    btn.style.position = 'relative';
+    btn.onclick = () => completeTask(name, btn);
+    display.appendChild(btn);
+    moveButtonRandomly(btn);
+  } else {
+    display.textContent = task;
+    completeTask(name);
+  }
+
+  // Confetti for fun
+  confetti({
+    particleCount: 50,
+    spread: 70,
+    origin: { y: 0.6 }
+  });
+
+  addSticker();
 }
 
-// Copy link function
-function copyLink() {
-  const link = document.getElementById("shareLink");
-  link.select();
-  link.setSelectionRange(0, 99999);
-  document.execCommand("copy");
-  alert("Link copied! Send it to your friend 😏");
+function completeTask(name, btn=null) {
+  if(btn) {
+    btn.onclick = null;
+    btn.style.transform = "scale(1.2)";
+  }
+  playerScores[name] += 10; // +10 points per task
+  updateScores();
 }
 
-showQuestion();
+function updateScores() {
+  const scoreDiv = document.getElementById('scores');
+  scoreDiv.innerHTML = '';
+  let maxScore = 0;
+  let winner = '';
+  for(const player of players) {
+    const div = document.createElement('div');
+    div.classList.add('player-score');
+    div.textContent = `${player}: ${playerScores[player]} pts`;
+    scoreDiv.appendChild(div);
+    if(playerScores[player] > maxScore) {
+      maxScore = playerScores[player];
+      winner = player;
+    }
+  }
+  if(maxScore >= 50) { // Show winner after some points
+    const winDiv = document.createElement('div');
+    winDiv.style.marginTop = "10px";
+    winDiv.style.fontWeight = "bold";
+    winDiv.style.color = "#ff6b6b";
+    winDiv.textContent = `🏆 Winner: ${winner}! 🎉`;
+    scoreDiv.appendChild(winDiv);
+  }
+}
+
+function moveButtonRandomly(btn) {
+  const container = btn.parentElement;
+  const move = () => {
+    const maxX = container.clientWidth - btn.offsetWidth;
+    const maxY = 100; // limited vertical movement
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+    btn.style.transform = `translate(${x}px, ${y}px)`;
+    if(btn.onclick) {
+      setTimeout(move, 1000);
+    }
+  };
+  move();
+}
+
+function addSticker() {
+  const sticker = document.createElement('div');
+  const bearEmojis = ["🐻","🧸","💖","🎉","😹"];
+  sticker.classList.add('sticker');
+  sticker.textContent = bearEmojis[Math.floor(Math.random() * bearEmojis.length)];
+  sticker.style.left = Math.random() * window.innerWidth + "px";
+  sticker.style.top = Math.random() * 200 + "px";
+  document.body.appendChild(sticker);
+  setTimeout(() => sticker.remove(), 5000);
+}
 </script>
 
 </body>
