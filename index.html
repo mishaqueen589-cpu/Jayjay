@@ -1,169 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Friendship Test - April Fool</title>
-  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Comic Neue', cursive;
-      background: linear-gradient(to bottom, #ffecd2, #fcb69f);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
-      text-align: center;
-    }
-    #container {
-      background: rgba(255,255,255,0.95);
-      padding: 50px;
-      border-radius: 30px;
-      box-shadow: 0 0 25px rgba(0,0,0,0.2);
-      max-width: 500px;
-      width: 90%;
-      position: relative;
-    }
-    h1 {
-      color: #ff6b81;
-      margin-bottom: 25px;
-      font-size: 2em;
-      text-shadow: 1px 1px 3px #fff;
-    }
-    .question {
-      font-size: 20px;
-      margin: 25px 0;
-    }
-    .options {
-      margin-top: 20px;
-    }
-    button {
-      padding: 12px 25px;
-      margin: 10px;
-      border: none;
-      border-radius: 20px;
-      background-color: #ff6b81;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.3s;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
-    }
-    button:hover {
-      background-color: #ff4757;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 15px rgba(0,0,0,0.3);
-    }
-    #characters {
-      position: absolute;
-      bottom: -20px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 30px;
-      z-index: 1;
-    }
-    #characters img {
-      width: 100px;
-      height: 100px;
-      animation: bounce 2s infinite;
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
-    }
-    /* Floating stickers */
-    .sticker {
-      position: absolute;
-      width: 50px;
-      height: 50px;
-      animation: float 8s infinite linear;
-    }
-    @keyframes float {
-      0% { transform: translateY(100vh) translateX(0) rotate(0deg); }
-      100% { transform: translateY(-50px) translateX(50px) rotate(360deg); }
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Friendship Test 🐻</title>
+
+<style>
+
+body{
+font-family: Arial, sans-serif;
+text-align:center;
+background: linear-gradient(135deg,#ff9ad5,#ffd6f6,#b8e7ff);
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+overflow:hidden;
+}
+
+.box{
+background:white;
+padding:40px;
+border-radius:20px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+max-width:450px;
+}
+
+h2{
+color:#ff4fa3;
+}
+
+button{
+padding:12px 25px;
+margin:10px;
+border:none;
+border-radius:10px;
+font-size:18px;
+cursor:pointer;
+background:#ff4fa3;
+color:white;
+transition:0.3s;
+}
+
+button:hover{
+background:#ff2f90;
+transform:scale(1.1);
+}
+
+.sticker{
+position:absolute;
+width:120px;
+}
+
+.bear1{top:20px; left:20px;}
+.bear2{bottom:20px; right:20px;}
+
+.result{
+font-size:20px;
+color:#444;
+margin-top:20px;
+}
+
+</style>
+
 </head>
+
 <body>
-  <div id="container">
-    <h1>Friendship Test</h1>
-    <div class="question" id="question">Am I your best friend?</div>
-    <div class="options" id="options">
-      <button onclick="answer('yes')">Yes</button>
-      <button onclick="answer('no')">No</button>
-    </div>
-    <div id="characters">
-    <img class="sticker" src="D:\Savage\download (1).jpg" style="left:10%;">
-<img class="sticker" src=""D:\Savage\download (1).jpg" style="left:40%; animation-delay: 2s;">
-<img class="sticker" src="D:\Savage\download.png" style="left:70%; animation-delay: 4s;">
-    </div>
-  </div>
-<!-- Floating stickers -->
-<img class="sticker" src="https://cdn-icons-png.flaticon.com/512/833/833472.png" style="left:10%;">
-<img class="sticker" src="https://cdn-icons-png.flaticon.com/512/833/833472.png" style="left:40%; animation-delay: 2s;">
-<img class="sticker" src="https://cdn-icons-png.flaticon.com/512/833/833472.png" style="left:70%; animation-delay: 4s;">
-  <script>
-    let step = 0;
 
-    function answer(choice) {
-      const question = document.getElementById('question');
-      const options = document.getElementById('options');
+<img class="sticker bear1" src="https://i.imgur.com/1Q9Z1Zm.png">
+<img class="sticker bear2" src="https://i.imgur.com/Z8qvK4B.png">
 
-      if(step === 0){
-        if(choice === 'yes'){
-          question.innerText = "I knew it! You are a liar 😏";
-        } else {
-          question.innerText = "I know you despise me 😢";
-        }
-        options.innerHTML = '<button onclick="nextStep()">Next</button>';
-        step++;
-      } 
-      else if(step === 1){
-        question.innerText = "Who is your best friend?";
-        options.innerHTML = '<button onclick="answerBestFriend(\'me\')">Me</button><button onclick="answerBestFriend(\'other\')">Other</button>';
-      }
-      else if(step === 2){
-        question.innerText = "Do you want to get rid of me?";
-        options.innerHTML = '<button onclick="answerGetRid(\'yes\')">Yes</button><button onclick="answerGetRid(\'no\')">No</button>';
-      }
-    }
+<div class="box">
 
-    function nextStep() {
-      step = 1;
-      const question = document.getElementById('question');
-      const options = document.getElementById('options');
-      question.innerText = "Who is your best friend?";
-      options.innerHTML = '<button onclick="answerBestFriend(\'me\')">Me</button><button onclick="answerBestFriend(\'other\')">Other</button>';
-    }
+<h2 id="question">Am I your best friend? 🥺</h2>
 
-    function answerBestFriend(choice) {
-      const question = document.getElementById('question');
-      const options = document.getElementById('options');
+<div id="buttons">
+<button onclick="answer('yes')">Yes</button>
+<button onclick="answer('no')">No</button>
+</div>
 
-      if(choice === 'me'){
-        question.innerText = "You are a liar 😏";
-      } else {
-        question.innerText = "You have changed 😢";
-      }
-      options.innerHTML = '<button onclick="nextStep()">Next</button>';
-      step = 2;
-    }
+<p class="result" id="result"></p>
 
-    function answerGetRid(choice) {
-      const question = document.getElementById('question');
-      const options = document.getElementById('options');
+</div>
 
-      if(choice === 'yes'){
-        question.innerText = "Congratulations! You have lost me 😎";
-      } else {
-        question.innerText = "You were lucky to have me 😏";
-      }
-      options.innerHTML = '<h2>APRIL FOOL! 🎉</h2>';
-    }
-  </script>
+<script>
+
+let step = 1;
+
+function answer(choice){
+
+let q = document.getElementById("question");
+let r = document.getElementById("result");
+let b = document.getElementById("buttons");
+
+if(step==1){
+
+if(choice=="yes"){
+r.innerHTML="😏 I knew it... you are a liar.";
+}else{
+r.innerHTML="😔 I know you despise me.";
+}
+
+setTimeout(()=>{
+q.innerHTML="Who is your best friend?";
+b.innerHTML='<button onclick="answer2(`me`)">Me</button><button onclick="answer2(`other`)">Other</button>';
+r.innerHTML="";
+step=2;
+},2000)
+
+}
+
+}
+
+function answer2(choice){
+
+let q = document.getElementById("question");
+let r = document.getElementById("result");
+let b = document.getElementById("buttons");
+
+if(choice=="me"){
+r.innerHTML="😂 Again lying?";
+}else{
+r.innerHTML="💔 Wow... you have changed.";
+}
+
+setTimeout(()=>{
+q.innerHTML="Do you want to get rid of me?";
+b.innerHTML='<button onclick="answer3(`yes`)">Yes</button><button onclick="answer3(`no`)">No</button>';
+r.innerHTML="";
+},2000)
+
+}
+
+function answer3(choice){
+
+let q = document.getElementById("question");
+let r = document.getElementById("result");
+let b = document.getElementById("buttons");
+
+if(choice=="yes"){
+r.innerHTML="🎉 Congratulations! You have lost me!";
+}else{
+r.innerHTML=" You are a fool!";
+}
+
+setTimeout(()=>{
+q.innerHTML="😂 APRIL FOOL 😂";
+r.innerHTML="You really thought this was serious!<br>Just a prank from your friend 🐻🐰";
+b.innerHTML="";
+},2000)
+
+}
+
+</script>
+
 </body>
 </html>
