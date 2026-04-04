@@ -1,63 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Friendship Test 🐻</title>
+<title>Friendship Test</title>
 
 <style>
 
 body{
-font-family: Arial, sans-serif;
+font-family:Arial;
+background:linear-gradient(135deg,#ffb6d9,#ffd6ea);
 text-align:center;
-background: linear-gradient(135deg,#ff9ad5,#ffd6f6,#b8e7ff);
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-overflow:hidden;
-}
-
-.box{
-background:white;
 padding:40px;
-border-radius:20px;
-box-shadow:0 10px 25px rgba(0,0,0,0.2);
-max-width:450px;
 }
 
-h2{
-color:#ff4fa3;
+.card{
+background:white;
+padding:30px;
+border-radius:20px;
+max-width:420px;
+margin:auto;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+.logo{
+font-size:45px;
 }
 
 button{
 padding:12px 25px;
 margin:10px;
-border:none;
-border-radius:10px;
 font-size:18px;
-cursor:pointer;
-background:#ff4fa3;
+border:none;
+border-radius:12px;
+background:#ff4da6;
 color:white;
-transition:0.3s;
+cursor:pointer;
 }
 
 button:hover{
-background:#ff2f90;
 transform:scale(1.1);
 }
 
-.sticker{
-position:absolute;
-width:120px;
+input{
+padding:10px;
+border-radius:10px;
+border:1px solid #ccc;
+font-size:16px;
 }
 
-.bear1{top:20px; left:20px;}
-.bear2{bottom:20px; right:20px;}
+.progress{
+width:100%;
+background:#eee;
+border-radius:20px;
+margin-top:15px;
+}
 
-.result{
-font-size:20px;
-color:#444;
+.bar{
+height:18px;
+width:0%;
+background:#ff4da6;
+border-radius:20px;
+}
+
+#noBtn{
+position:relative;
+}
+
+.share{
+display:none;
 margin-top:20px;
 }
 
@@ -67,88 +77,175 @@ margin-top:20px;
 
 <body>
 
-<img class="sticker bear1" src="https://www.google.com/imgres?q=cute%20bear%20stickers&imgurl=https%3A%2F%2Fimg-16.stickers.cloud%2Fpacks%2Ff58780e6-e5fe-48f3-ac8b-55da9643f414%2Fwebp%2F5f4a0545-cff3-401f-83f5-bc5a8884611c.webp&imgrefurl=https%3A%2F%2Fstickers.cloud%2Fen%2Fpack%2Fcute-bear&docid=U4e_cW-HfY___M&tbnid=Vke-RGoNY0DgTM&vet=12ahUKEwjLwN-Ig9OTAxWegP0HHULFES8QnPAOegQIJxAB..i&w=512&h=512&hcb=2&ved=2ahUKEwjLwN-Ig9OTAxWegP0HHULFES8QnPAOegQIJxAB" >
-<img class="sticker bear2" src= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRdwt6uRtvAlNrPP1zX718Jjvz9nxPAednJZTYtMcefg&s"s>
+<div class="card">
 
-<div class="box">
+<div class="logo">🐻💖</div>
 
-<h2 id="question">Am I your best friend? 🥺</h2>
+<h2>Friendship Test</h2>
 
-<div id="buttons">
-<button onclick="answer('yes')">Yes</button>
-<button onclick="answer('no')">No</button>
+<div id="start">
+
+<p>Enter your name</p>
+
+<input id="name" placeholder="Your name">
+
+<br><br>
+
+<button onclick="startTest()">Start</button>
+
 </div>
 
-<p class="result" id="result"></p>
+<div id="quiz" style="display:none">
+
+<h3 id="question"></h3>
+
+<button onclick="next()">Yes</button>
+
+<button id="noBtn" onmouseover="run()">No</button>
+
+<div class="progress">
+<div id="progressBar" class="bar"></div>
+</div>
+
+<p id="msg"></p>
+
+</div>
+
+<div class="share">
+
+<button onclick="share()">Send to your friends</button>
+
+</div>
 
 </div>
 
 <script>
 
-let step = 1;
+let name="";
 
-function answer(choice){
+let step=0;
 
-let q = document.getElementById("question");
-let r = document.getElementById("result");
-let b = document.getElementById("buttons");
+let score=100;
 
-if(step==1){
+let questions=[
 
-if(choice=="yes"){
-r.innerHTML="😏 I knew it... you are a liar.";
-}else{
-r.innerHTML="😔 I know you despise me.";
+"Are you really my friend?",
+
+"Do you know my birthday? 🎂",
+
+"Do you know my favourite colour? 🎨",
+
+"Do you hate me? 🤔",
+
+"Do you reply to my messages quickly? 📱",
+
+"Would you miss me if I disappeared? 👀",
+
+"Do you ever ignore me? 😑",
+
+"Will you stay my friend forever? 💖"
+
+];
+
+function startTest(){
+
+name=document.getElementById("name").value;
+
+if(name==""){
+
+alert("Please enter your name");
+
+return;
+
 }
+
+document.getElementById("start").style.display="none";
+
+document.getElementById("quiz").style.display="block";
+
+document.getElementById("question").innerHTML=questions[0];
+
+}
+
+function next(){
+
+step++;
+
+score-=10;
+
+document.getElementById("progressBar").style.width=(step/questions.length*100)+"%";
+
+document.getElementById("msg").innerHTML="Checking honesty...";
+
+if(step<questions.length){
 
 setTimeout(()=>{
-q.innerHTML="Who is your best friend?";
-b.innerHTML='<button onclick="answer2(`me`)">Me</button><button onclick="answer2(`other`)">Other</button>';
-r.innerHTML="";
-step=2;
-},2000)
+
+document.getElementById("question").innerHTML=questions[step];
+
+document.getElementById("msg").innerHTML="";
+
+},800);
+
+}
+
+else{
+
+finish();
 
 }
 
 }
 
-function answer2(choice){
+function run(){
 
-let q = document.getElementById("question");
-let r = document.getElementById("result");
-let b = document.getElementById("buttons");
+let btn=document.getElementById("noBtn");
 
-if(choice=="me"){
-r.innerHTML="😂 Again lying?";
-}else{
-r.innerHTML="💔 Wow... you have changed.";
+btn.style.position="absolute";
+
+btn.style.left=Math.random()*300+"px";
+
+btn.style.top=Math.random()*200+"px";
+
 }
+
+function finish(){
+
+document.getElementById("question").innerHTML="Analyzing Friendship...";
 
 setTimeout(()=>{
-q.innerHTML="Do you want to get rid of me?";
-b.innerHTML='<button onclick="answer3(`yes`)">Yes</button><button onclick="answer3(`no`)">No</button>';
-r.innerHTML="";
-},2000)
 
-}
+document.getElementById("msg").innerHTML=name+", your friendship score is "+score+"%";
 
-function answer3(choice){
-
-let q = document.getElementById("question");
-let r = document.getElementById("result");
-let b = document.getElementById("buttons");
-
-if(choice=="yes"){
-r.innerHTML="🎉 Congratulations! You have lost me!";
-}else{
-r.innerHTML="You are a fool!";
-}
+},2000);
 
 setTimeout(()=>{
-q.innerHTML="😂 APRIL FOOL 😂";
-r.innerHTML="IYKYK!<br>Just a prank  friend 🐻🐰";
-b.innerHTML="";
-},2000)
+
+document.getElementById("msg").innerHTML="💔 Friendship Failed";
+
+},4000);
+
+setTimeout(()=>{
+
+document.getElementById("msg").innerHTML="Deleting friendship data...";
+
+},6000);
+
+setTimeout(()=>{
+
+document.getElementById("msg").innerHTML="😂 APRIL FOOL 😂<br>You are still my friend!";
+
+document.querySelector(".share").style.display="block";
+
+},8000);
+
+}
+
+function share(){
+
+navigator.clipboard.writeText(window.location.href);
+
+alert("Link copied! Send it to your friends 😈");
 
 }
 
