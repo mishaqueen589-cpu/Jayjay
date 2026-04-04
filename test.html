@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cute Friendship Test</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:linear-gradient(135deg,#ffd6ec,#ffe8f5);
+text-align:center;
+padding:30px;
+}
+
+.box{
+background:white;
+padding:30px;
+border-radius:20px;
+max-width:450px;
+margin:auto;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+h2{
+color:#ff4da6;
+}
+
+button{
+padding:12px 25px;
+margin:10px;
+font-size:18px;
+border:none;
+border-radius:12px;
+background:#ff4da6;
+color:white;
+cursor:pointer;
+}
+
+button:hover{
+transform:scale(1.1);
+}
+
+#noBtn{
+position:relative;
+}
+
+.bar{
+width:100%;
+background:#eee;
+border-radius:20px;
+margin-top:15px;
+}
+
+.fill{
+height:20px;
+width:100%;
+background:#ff4da6;
+border-radius:20px;
+}
+
+.stickers{
+font-size:35px;
+}
+
+.scoreboard{
+margin-top:20px;
+background:#fff0f7;
+padding:15px;
+border-radius:15px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<div class="stickers">🐻💖✨🌸</div>
+
+<h2 id="question">Are you really my friend?</h2>
+
+<button onclick="yes()">Yes</button>
+<button id="noBtn" onmouseover="run()">No</button>
+
+<div class="bar">
+<div id="meter" class="fill"></div>
+</div>
+
+<p id="text"></p>
+
+<audio id="song">
+<source src="hurtssogood.mp3" type="audio/mpeg">
+</audio>
+
+</div>
+
+<script>
+
+let step=0;
+let score=100;
+
+let questions=[
+"Do you ever backbite about me? 😢",
+"Do you want to leave me? 💔",
+"Do you ignore my messages on purpose? 📱",
+"Do you talk bad about me to others? 😔",
+"Would you forget me easily? 🥺",
+"Do you secretly dislike me? 😞",
+"Would you replace me with another friend? 💔",
+"Do you lie to me sometimes? 😢"
+];
+
+function yes(){
+
+let text=document.getElementById("text");
+
+if(step<questions.length){
+
+text.innerHTML="You said YES 😢💔 You broke my heart!";
+
+score-=15;
+
+document.getElementById("meter").style.width=score+"%";
+
+document.getElementById("question").innerHTML=questions[step];
+
+step++;
+
+}else{
+
+finish();
+
+}
+
+}
+
+function run(){
+
+let btn=document.getElementById("noBtn");
+
+btn.style.position="absolute";
+
+btn.style.left=Math.random()*300+"px";
+
+btn.style.top=Math.random()*300+"px";
+
+}
+
+function finish(){
+
+document.getElementById("question").innerHTML="Calculating Friendship Score...";
+
+setTimeout(()=>{
+document.getElementById("text").innerHTML="Your Friendship Score: "+score+"%";
+},2000);
+
+setTimeout(()=>{
+
+document.getElementById("text").innerHTML+=
+"<div class='scoreboard'><h3>🏆 Friend Scoreboard</h3>"+
+"Ayesha – 82%<br>"+
+"Ali – 74%<br>"+
+"Fatima – 91%<br>"+
+"You – "+score+"% 😶"+
+"</div>";
+
+},4000);
+
+setTimeout(()=>{
+document.getElementById("song").play();
+},5000);
+
+setTimeout(()=>{
+document.getElementById("text").innerHTML+="<br><br>Loading...";
+},9000);
+
+setTimeout(()=>{
+document.getElementById("text").innerHTML+="<br><br>😂 You have been pranked successfully 💃🕺";
+},12000);
+
+}
+
+</script>
+
+</body>
+</html>
